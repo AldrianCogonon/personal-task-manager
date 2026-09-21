@@ -1,5 +1,5 @@
 # personal-task-manager
-Project Code: WST21-PM-2026-SF
+Project Code: WST21-PM-2026-SF\n
 Student Name: Aldrian A. Cogonon
 Course & Year: BSIT-2Y
 Database Used: MYSQL
