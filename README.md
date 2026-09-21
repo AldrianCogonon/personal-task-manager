@@ -1,8 +1,8 @@
 # STUDENT INFORMATION
-* **Project Code: WST21-PM-2026-SF**
-* **Student Name: Aldrian A. Cogonon**
-* **Course & Year: BSIT-2Y**
-* **Database Used: MYSQL**
+* **Project Code:** WST21-PM-2026-SF
+* **Student Name:** Aldrian A. Cogonon
+* **Course & Year:** BSIT-2Y
+* **Database Used:** MYSQL
 
 # Personal Task Manager
 
@@ -10,7 +10,7 @@ A simple, lightweight personal task manager built with Laravel, PHP, and MariaDB
 
 ---
 
-## ✨ Features
+## Features
 * **ADD TASK**
 * **VIEW TASKS**
 * **EDIT TASK**
@@ -18,7 +18,7 @@ A simple, lightweight personal task manager built with Laravel, PHP, and MariaDB
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 * **Backend:** PHP / Laravel
 * **Database:** MariaDB
 * **Frontend:** HTML, CSS (Blade Views)
