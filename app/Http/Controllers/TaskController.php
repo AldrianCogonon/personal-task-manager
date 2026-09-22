@@ -4,41 +4,91 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
     public function index()
     {
         $tasks = Task::latest()->get();
+
         return view('tasks.index', compact('tasks'));
+    }
+
+    public function allTasks()
+    {
+        $tasks = Task::latest()->get();
+
+        return view('tasks.all_tasks', compact('tasks'));
+    }
+
+    public function create()
+    {
+        return view('tasks.create');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|max:255',
+            'task_name' => 'required|max:255',
             'description' => 'nullable',
+            'status' => 'required|in:pending,completed',
             'due_date' => 'nullable|date',
         ]);
 
+        if(Task::count() === 0)
+        {
+                DB::statement('ALTER TABLE tasks AUTO_INCREMENT = 1');
+        }
         Task::create($validated);
 
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
+        return redirect()
+            ->route('tasks.all')
+            ->with('success', 'Task created successfully!');
+    }
+
+    public function edit(Task $task)
+    {
+        return view('tasks.edit', compact('task'));
     }
 
     public function update(Request $request, Task $task)
     {
-        $task->update([
-            'status' => $request->status ?? $task->status,
+        $validated = $request->validate([
+            'task_name' => 'required|max:255',
+            'description' => 'nullable',
+            'status' => 'required|in:pending,completed',
+            'due_date' => 'nullable|date',
         ]);
 
-        return redirect()->route('tasks.index')->with('success', 'Task status updated!');
+        $task->update($validated);
+
+        return redirect()
+            ->route('tasks.all')
+            ->with('success', 'Task updated successfully!');
     }
 
     public function destroy(Task $task)
     {
         $task->delete();
+        if (Task::count() === 0) {
+            DB::statement('ALTER TABLE tasks AUTO_INCREMENT = 1');
+        }
+        return redirect()
+            ->route('tasks.all')
+            ->with('success', 'Task deleted successfully!');
+    }
 
-        return redirect()->route('tasks.index')->with('success', 'Task deleted!');
+    public function updateStatus(Task $task)
+    {
+        $task->update([
+            'status' => $task->status === 'pending'
+                ? 'completed'
+                : 'pending',
+        ]);
+
+        return redirect()
+            ->route('tasks.all')
+            ->with('success', 'Task status updated!');
     }
 }
