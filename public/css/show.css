@@ -1,12 +1,32 @@
+.show-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 0 60px;
+}
+
 .edit-page {
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 22px 0 60px;
+    padding: 30px 0 60px;
 }
 
 .edit-header {
     margin-bottom: 24px;
+}
+
+.edit-header .back-link {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.edit-header .back-link:hover {
+    color: var(--blue);
 }
 
 .edit-header h2 {
@@ -26,8 +46,11 @@
     width: 100%;
     padding: 30px;
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border);
     border-radius: 12px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 .task-view-header {
@@ -36,14 +59,15 @@
     justify-content: space-between;
     gap: 20px;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .task-view-header h3 {
     margin-top: 7px;
     color: var(--text);
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 650;
+    line-height: 1.3;
 }
 
 .task-view-label {
@@ -51,11 +75,13 @@
     color: var(--muted);
     font-size: 11px;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .task-view-section {
     padding: 24px 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .task-view-section p {
@@ -67,9 +93,19 @@
 
 .task-view-details {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
     padding: 24px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.task-view-details > div {
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .task-view-details strong {
@@ -77,12 +113,112 @@
     margin-top: 7px;
     color: var(--text);
     font-size: 13px;
+    font-weight: 600;
+}
+
+.task-view-details > div:first-child strong {
+    color: var(--red);
+    text-shadow: 0 0 7px rgba(255, 48, 48, 0.16);
+}
+
+.task-view-details > div:nth-child(2) strong {
+    color: var(--muted);
+}
+
+.task-view-details > div:nth-child(3) strong {
+    color: var(--muted);
+}
+
+.status-badge {
+    min-width: 82px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.status-badge.pending {
+    background: var(--orange-light);
+    color: var(--orange);
+    box-shadow: var(--orange-glow);
+}
+
+.status-badge.completed {
+    background: var(--green-light);
+    color: var(--green);
+    box-shadow: var(--green-glow);
 }
 
 .task-view-actions {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 12px;
-    padding-top: 14px;
+    gap: 10px;
+    padding-top: 24px;
+}
+
+.task-view-actions form {
+    margin: 0;
+    padding: 0;
+}
+
+.task-view-actions .save-button,
+.task-view-actions .cancel-button {
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.task-view-actions .save-button {
+    border: 1px solid var(--blue);
+    background: var(--blue);
+    color: #ffffff;
+    box-shadow: var(--blue-glow);
+}
+
+.task-view-actions .save-button:hover {
+    box-shadow:
+        0 0 12px rgba(59, 130, 246, 0.28),
+        0 0 22px rgba(59, 130, 246, 0.1);
+}
+
+.task-view-actions .cancel-button {
+    border: 1px solid var(--red);
+    background: rgba(255, 48, 48, 0.08);
+    color: var(--red);
+    box-shadow: var(--red-glow);
+}
+
+.task-view-actions .cancel-button:hover {
+    background: rgba(255, 48, 48, 0.14);
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow:
+        0 0 10px rgba(255, 48, 48, 0.24),
+        0 0 20px rgba(255, 48, 48, 0.1);
+}
+
+.task-view-actions button.cancel-button {
+    margin: 0;
+    font-family: inherit;
+    line-height: normal;
+}
+
+@media (max-width: 1200px) {
+    .content {
+        padding: 0 25px 35px;
+    }
 }

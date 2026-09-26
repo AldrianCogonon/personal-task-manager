@@ -256,6 +256,7 @@
             </section>
         </main>
         <script src="{{ asset('js/searchResults.js') }}"></script>
+        <script src="{{ asset('js/all_tasks.js') }}"></script>
         <script src="{{ asset('js/darkmode.js') }}"></script>
     </body> 
     </html>

@@ -20,9 +20,25 @@
     <aside class="nav-sidebar">
 
     <div class="nav-logo">
-        <h1>TaskFlow</h1>
-    </div>
+                <div class="logo-wrapper">
+                    <img
+                        src="{{ asset('images/taskflow-logo.png') }}"
+                        alt="TaskFlow Logo"
+                        class="logo-image"
+                    >
+                </div>
+                <h1>TaskFlow</h1>
+            </div>
 
+            <div class="logo-attribution">
+                <a
+                    href="https://www.flaticon.com/free-icons/bird"
+                    title="bird icons"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                </a>
+            </div>
     <nav class="nav-links">
         <a href="{{ route('tasks.index') }}" class="nav-link">
             <span class="nav-icon">⌂</span>

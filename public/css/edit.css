@@ -2,7 +2,7 @@
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 22px 0 60px;
+    padding: 30px 0 60px;
 }
 
 .edit-header {
@@ -15,6 +15,7 @@
     color: var(--muted);
     font-size: 13px;
     font-weight: 500;
+    transition: 0.2s ease;
 }
 
 .edit-header .back-link:hover {
@@ -38,8 +39,11 @@
     width: 100%;
     padding: 30px;
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border);
     border-radius: 12px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 .edit-form .form-group {
@@ -59,12 +63,15 @@
 .edit-form .form-group select {
     display: block;
     width: 100%;
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border);
     border-radius: 8px;
     outline: none;
     background: var(--surface);
     color: var(--text);
     font-size: 13px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: 0.2s ease;
 }
 
 .edit-form .form-group input,
@@ -89,6 +96,7 @@
 .edit-form .form-group textarea:focus,
 .edit-form .form-group select:focus {
     border-color: var(--blue);
+    box-shadow: var(--blue-glow);
 }
 
 .edit-form .form-row {
@@ -97,14 +105,23 @@
     gap: 18px;
 }
 
+.edit-form input[type="date"] {
+    color-scheme: light;
+}
+
+html[data-theme="dark"] .edit-form input[type="date"] {
+    color-scheme: dark;
+}
+
 .form-errors {
     margin-bottom: 20px;
     padding: 12px 14px;
-    border: 1px solid #dc2626;
+    border: 1px solid var(--red);
     border-radius: 8px;
-    background: rgba(220, 38, 38, 0.06);
-    color: #dc2626;
+    background: rgba(255, 48, 48, 0.08);
+    color: var(--red);
     font-size: 12px;
+    box-shadow: var(--red-glow);
 }
 
 .form-errors p + p {
@@ -117,7 +134,7 @@
     gap: 10px;
     padding-top: 20px;
     margin-top: 10px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--glass-border);
 }
 
 .edit-actions .cancel-button,
@@ -131,24 +148,42 @@
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .edit-actions .cancel-button {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
+    border: 1px solid var(--red);
+    background: rgba(255, 48, 48, 0.08);
+    color: var(--red);
+    box-shadow: var(--red-glow);
 }
 
 .edit-actions .cancel-button:hover {
-    background: var(--hover);
+    background: rgba(255, 48, 48, 0.14);
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow:
+        0 0 10px rgba(255, 48, 48, 0.24),
+        0 0 20px rgba(255, 48, 48, 0.1);
 }
 
 .edit-actions .save-button {
     border: 1px solid var(--blue);
     background: var(--blue);
     color: #ffffff;
+    box-shadow: var(--blue-glow);
 }
 
 .edit-actions .save-button:hover {
-    background: var(--blue-hover);
+    box-shadow:
+        0 0 12px rgba(59, 130, 246, 0.28),
+        0 0 22px rgba(59, 130, 246, 0.1);
+}
+
+.edit-actions button.save-button {
+    font-family: inherit;
+    line-height: normal;
 }
