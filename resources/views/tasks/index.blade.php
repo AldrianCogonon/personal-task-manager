@@ -150,7 +150,7 @@
                                 <option value="week">Next 7 days</option>
                                 <option value="month">This month</option>
                                 <option value="overdue">Overdue</option>
-                                <option value="none">No due date</option>
+                                <option value="none">Indefinite</option>
                             </select>
                         </div>
 
@@ -180,7 +180,7 @@
                                     <span>Due</span>
 
                                     <strong>
-                                        {{ $task->due_date ? $task->due_date->format('M d, Y') : 'No date' }}
+                                        {{ $task->due_date ? $task->due_date->format('M d, Y') : 'Indefinite' }}
                                     </strong>
                                 </div>
 

@@ -107,13 +107,16 @@ class TaskController extends Controller
 
         $tasks = Task::where('task_name', 'like', '%' . $search . '%')
             ->latest()
-            ->get(['id', 'task_name']);
+            ->get();
 
         return response()->json(
             $tasks->map(function ($task) {
                 return [
                     'id' => $task->id,
                     'task_name' => $task->task_name,
+                    'description' => $task->description,
+                    'status' => $task->status,
+                    'due_date' => $task->due_date,
                     'url' => route('tasks.show', $task->id),
                 ];
             })

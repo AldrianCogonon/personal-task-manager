@@ -1,4 +1,4 @@
-const themeToggle = document.getElementById('themeToggle'); 
+const themeToggle = document.getElementById('themeToggle');
 const statusFilter = document.getElementById('statusFilter');
 const dateFilter = document.getElementById('dateFilter');
 const clearFilters = document.getElementById('clearFilters');
@@ -8,16 +8,21 @@ const filterEmpty = document.getElementById('filterEmpty');
 function setTheme(theme) {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('taskflow-theme', theme);
-    themeToggle.textContent = theme === 'dark' ? '☀' : '☼';
+
+    if (themeToggle) {
+        themeToggle.textContent = theme === 'dark' ? '☀' : '☼';
+    }
 }
 
 setTheme(localStorage.getItem('taskflow-theme') || 'light');
 
-themeToggle.addEventListener('click', function () {
-    const theme = document.documentElement.dataset.theme;
+if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+        const theme = document.documentElement.dataset.theme;
 
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-});
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+    });
+}
 
 function matchesDate(taskDate, filter) {
     if (filter === 'all') {
@@ -61,7 +66,6 @@ function matchesDate(taskDate, filter) {
 
     return true;
 }
-
 function applyFilters() {
     const status = statusFilter.value;
     const date = dateFilter.value;
@@ -101,8 +105,8 @@ function displayTasks(tasks) {
         const article = document.createElement('article');
 
         article.className = 'recent-task';
-        article.dataset.status = task.status;
-        article.dataset.dueDate = task.due_date || '';
+        article.dataset.status = task.status || '';
+        article.dataset.dueDate = task.due_date || '';  
 
         const info = document.createElement('div');
         info.className = 'recent-task-info';
@@ -124,16 +128,16 @@ function displayTasks(tasks) {
         dateLabel.textContent = 'Due';
 
         const dateValue = document.createElement('strong');
-        dateValue.textContent = task.due_date || 'No date';
+        dateValue.textContent = task.due_date || 'Indefinite';
 
         dateContainer.appendChild(dateLabel);
         dateContainer.appendChild(dateValue);
 
         const status = document.createElement('span');
-        status.className = `status-badge ${task.status}`;
-        status.textContent =
-            task.status.charAt(0).toUpperCase() +
-            task.status.slice(1);
+        status.className = `status-badge ${task.status || ''}`;
+        status.textContent = task.status
+            ? task.status.charAt(0).toUpperCase() + task.status.slice(1)
+            : '';
 
         article.appendChild(info);
         article.appendChild(dateContainer);
@@ -148,3 +152,20 @@ function displayTasks(tasks) {
         filterEmpty.hidden = false;
     }
 }
+
+statusFilter.addEventListener('change', function () {
+    applyFilters();
+});
+
+dateFilter.addEventListener('change', function () {
+    applyFilters();
+});
+
+clearFilters.addEventListener('click', function () {
+    statusFilter.value = 'all';
+    dateFilter.value = 'all';
+
+    applyFilters();
+});
+
+applyFilters();
