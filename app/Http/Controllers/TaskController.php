@@ -109,6 +109,14 @@ class TaskController extends Controller
             ->latest()
             ->get(['id', 'task_name']);
 
-        return response()->json($tasks);
+        return response()->json(
+            $tasks->map(function ($task) {
+                return [
+                    'id' => $task->id,
+                    'task_name' => $task->task_name,
+                    'url' => route('tasks.show', $task->id),
+                ];
+            })
+        );
     }
 }

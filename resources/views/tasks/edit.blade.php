@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Task - TaskFlow</title>
     <link rel="stylesheet" href="{{ asset('css/all_tasks.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/searchResults.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/edit.css') }}">
     <script>
         document.documentElement.dataset.theme = localStorage.getItem('taskflow-theme') || 'light';
     </script>
@@ -44,16 +45,10 @@
             <header class="topbar">
 
                 <div class="search-bar">
-
                     <span class="search-icon">⌕</span>
-
-                    <input
-                        type="text"
-                        placeholder="Search tasks..."
-                    >
-
+                    <input type="text" id="globalSearch" placeholder="Search tasks..." autocomplete="off">
+                    <div id="searchResults" class="search-results"></div>
                 </div>
-
                 <button
                     id="themeToggle"
                     class="theme-button"
@@ -68,26 +63,15 @@
             <section class="edit-page">
 
                 <div class="edit-header">
+                    <a href="{{ route('tasks.all') }}" class="back-link">
+                        ← Back to All Tasks
+                    </a>
 
-                    <div>
+                    <h2>Edit Task</h2>
 
-                        <a
-                            href="{{ route('tasks.all') }}"
-                            class="back-link"
-                        >
-                            ← Back to All Tasks
-                        </a>
-
-                        <h2>
-                            Edit Task
-                        </h2>
-
-                        <p>
-                            Update your task information.
-                        </p>
-
-                    </div>
-
+                    <p>
+                        Update your task information.
+                    </p>
                 </div>
 
                 <form
@@ -95,31 +79,19 @@
                     method="POST"
                     class="edit-form"
                 >
-
                     @csrf
                     @method('PUT')
 
                     @if($errors->any())
-
                         <div class="form-errors">
-
                             @foreach($errors->all() as $error)
-
-                                <p>
-                                    {{ $error }}
-                                </p>
-
+                                <p>{{ $error }}</p>
                             @endforeach
-
                         </div>
-
                     @endif
 
                     <div class="form-group">
-
-                        <label for="task_name">
-                            Task Name
-                        </label>
+                        <label for="task_name">Task Name</label>
 
                         <input
                             type="text"
@@ -129,14 +101,10 @@
                             placeholder="Enter task name"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
-                        <label for="description">
-                            Description
-                        </label>
+                        <label for="description">Description</label>
 
                         <textarea
                             id="description"
@@ -144,16 +112,12 @@
                             rows="6"
                             placeholder="Enter task description"
                         >{{ old('description', $task->description) }}</textarea>
-
                     </div>
 
                     <div class="form-row">
 
                         <div class="form-group">
-
-                            <label for="due_date">
-                                Due Date
-                            </label>
+                            <label for="due_date">Due Date</label>
 
                             <input
                                 type="date"
@@ -161,20 +125,12 @@
                                 name="due_date"
                                 value="{{ old('due_date', $task->due_date ? \Carbon\Carbon::parse($task->due_date)->format('Y-m-d') : '') }}"
                             >
-
                         </div>
 
                         <div class="form-group">
+                            <label for="status">Status</label>
 
-                            <label for="status">
-                                Status
-                            </label>
-
-                            <select
-                                id="status"
-                                name="status"
-                            >
-
+                            <select id="status" name="status">
                                 <option
                                     value="pending"
                                     {{ old('status', $task->status) === 'pending' ? 'selected' : '' }}
@@ -188,15 +144,12 @@
                                 >
                                     Completed
                                 </option>
-
                             </select>
-
                         </div>
 
                     </div>
 
                     <div class="edit-actions">
-
                         <a
                             href="{{ route('tasks.all') }}"
                             class="cancel-button"
@@ -210,38 +163,17 @@
                         >
                             Save Changes
                         </button>
-
                     </div>
 
                 </form>
 
             </section>
-
         </section>
 
     </main>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-
-        function setTheme(theme) {
-            document.documentElement.dataset.theme = theme;
-            localStorage.setItem('taskflow-theme', theme);
-            themeToggle.textContent = theme === 'dark' ? '☀' : '☼';
-        }
-
-        setTheme(localStorage.getItem('taskflow-theme') || 'light');
-
-        themeToggle.addEventListener('click', function () {
-            const currentTheme = document.documentElement.dataset.theme;
-
-            setTheme(
-                currentTheme === 'dark'
-                    ? 'light'
-                    : 'dark'
-            );
-        });
-    </script>
+<script src="{{ asset('js/darkmode.js') }}"></script>
+<script src="{{ asset('js/searchResults.js') }}"></script>
 
 </body>
 

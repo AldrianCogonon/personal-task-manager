@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/all_tasks.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/show.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/searchResults.css') }}">
 </head>
 <body>
 
@@ -33,16 +34,16 @@
             All Tasks
         </a>
     </nav>
-
     </aside>
 
     <main class="content">
 
         <header class="topbar">
 
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" placeholder="Search tasks...">
+           <div class="search-bar">
+                <span class="search-icon">⌕</span>
+                <input type="text" id="globalSearch" placeholder="Search tasks..." autocomplete="off">
+                <div id="searchResults" class="search-results"></div>
             </div>
 
             <button id="themeToggle" class="theme-button" type="button" aria-label="Toggle theme">☼</button>
@@ -114,22 +115,7 @@
 
 </div>
 
-<script>
-    const themeToggle = document.getElementById('themeToggle');
-
-    function setTheme(theme) {
-        document.documentElement.dataset.theme = theme;
-        localStorage.setItem('taskflow-theme', theme);
-        themeToggle.textContent = theme === 'dark' ? '☀' : '☼';
-    }
-
-    setTheme(localStorage.getItem('taskflow-theme') || 'light');
-
-    themeToggle.addEventListener('click', function () {
-        const currentTheme = document.documentElement.dataset.theme;
-        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-    });
-</script>
-
+<script src="{{ asset('js/darkmode.js') }}"></script>
+<script src="{{ asset('js/searchResults.js') }}"></script>
 </body>
 </html>

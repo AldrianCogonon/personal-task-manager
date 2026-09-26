@@ -54,8 +54,7 @@ globalSearch.addEventListener('input', function () {
                     task.task_name;
 
                 result.addEventListener('click', function () {
-                    globalSearch.value = task.task_name;
-                    searchResults.style.display = 'none';
+                    window.location.href = task.url;
                 });
 
                 searchResults.appendChild(result);
