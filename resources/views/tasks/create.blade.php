@@ -102,6 +102,7 @@
                                     id="due_date"
                                     name="due_date"
                                     value="{{ old('due_date') }}"
+                                    min="{{ now()->format('Y-m-d') }}"
                                 >
 
                                 @error('due_date')

@@ -39,7 +39,7 @@ class TaskController extends Controller
             'task_name' => 'required|max:255',
             'description' => 'nullable',
             'status' => 'required|in:pending,completed',
-            'due_date' => 'nullable|date',
+            'due_date' => 'nullable|date|after_or_equal:today',
         ]);
 
         if(Task::count() === 0)
