@@ -1,12 +1,14 @@
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Task - TaskFlow</title>
     <link rel="stylesheet" href="{{ asset('css/create_tasks.css') }}">
+     <script>
+        document.documentElement.dataset.theme =
+            localStorage.getItem('taskflow-theme') || 'light';
+    </script>
 </head>
 
 <body>
@@ -35,7 +37,7 @@
                 <div></div>
 
                 <div class="topbar-actions">
-                    <button class="icon-button">☼</button>
+                    <button class="theme-button" id="themeToggle" type="button" aria-label="Toggle theme">☼</button>
                 </div>
             </header>
 
