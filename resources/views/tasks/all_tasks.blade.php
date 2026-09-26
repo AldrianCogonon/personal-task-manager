@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html lang="en" data-theme="light">
+    <html lang="en" data-theme="light" >
 
     <head>
         <meta charset="UTF-8">
@@ -17,8 +17,23 @@
             <aside class="nav-sidebar">
 
                 <div class="nav-logo">
-                    <div class="logo-icon">✓</div>
+                    <img
+                        src="{{ asset('images/taskflow-logo.png') }}"
+                        alt="TaskFlow Logo"
+                        class="logo-image"
+                    >
+
                     <h1>TaskFlow</h1>
+                </div>
+
+                <div class="logo-attribution">
+                    <a
+                        href="https://www.flaticon.com/free-icons/bird"
+                        title="bird icons"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                    </a>
                 </div>
 
                 <nav class="nav-links">
