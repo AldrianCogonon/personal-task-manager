@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>All Tasks - TaskFlow</title>
         <link rel="stylesheet" href="{{ asset('css/all_tasks.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/searchResults.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-        <script src="{{ asset('js/darkmode.js') }}" defer></script>
     </head>
 
     <body>
@@ -44,11 +44,8 @@
                     <div class="search-bar">
                         <span class="search-icon">⌕</span>
 
-                        <input
-                            type="text"
-                            id="taskSearch"
-                            placeholder="Search tasks..."
-                        >
+                        <input type="text" id="globalSearch" placeholder="Search tasks..." autocomplete="off">
+                        <div id="searchResults" class="search-results"></div>
                     </div>
 
                     <button
@@ -243,5 +240,7 @@
                 </section>
             </section>
         </main>
+        <script src="{{ asset('js/searchResults.js') }}"></script>
+        <script src="{{ asset('js/darkmode.js') }}"></script>
     </body> 
     </html>

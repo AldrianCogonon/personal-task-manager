@@ -138,6 +138,7 @@ select {
     align-items: center;
     gap: 15px;
     border-bottom: 1px solid var(--border);
+    overflow: visible;
 }
 
 .search-bar {

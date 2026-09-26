@@ -28,21 +28,6 @@
                     <span>All Tasks</span>
                 </a>
             </nav>
-
-            <div class="sidebar-bottom">
-                <div class="user-profile">
-                    <div class="avatar">
-                        {{ strtoupper(substr(Auth::user()?->username ?? 'G', 0, 1)) }}
-                    </div>
-
-                    <div class="user-info">
-                        <span class="user-name">
-                            {{ Auth::user()?->username ?? 'Guest' }}
-                        </span>
-                        <span class="user-role">Personal Account</span>
-                    </div>
-                </div>
-            </div>
         </aside>
 
         <section class="content">
@@ -51,10 +36,6 @@
 
                 <div class="topbar-actions">
                     <button class="icon-button">☼</button>
-
-                    <div class="avatar">
-                        {{ strtoupper(substr(Auth::user()?->username ?? 'G', 0, 1)) }}
-                    </div>
                 </div>
             </header>
 
@@ -158,6 +139,7 @@
             </div>
         </section>
     </main>
+    <script src="{{ asset('js/darkmode.js') }}"></script>
 </body>
 
 </html>

@@ -101,4 +101,14 @@ class TaskController extends Controller
     {
         return view('tasks.show', compact('task'));
     }
+    public function search(Request $request)
+    {
+        $search = trim($request->input('q', ''));
+
+        $tasks = Task::where('task_name', 'like', '%' . $search . '%')
+            ->latest()
+            ->get(['id', 'task_name']);
+
+        return response()->json($tasks);
+    }
 }

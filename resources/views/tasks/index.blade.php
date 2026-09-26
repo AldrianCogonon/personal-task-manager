@@ -36,7 +36,8 @@
             <header class="topbar">
                 <div class="search-bar">
                     <span class="search-icon">⌕</span>
-                    <input id="globalSearch" type="text" placeholder="Search tasks...">
+                    <input id="globalSearch" type="text" placeholder="Search tasks..."  autocomplete="off">
+                    <div id="searchResults" class="search-results"></div>
                 </div>
 
                 <button id="themeToggle" class="theme-button" type="button" aria-label="Toggle theme">
@@ -207,6 +208,7 @@
     </main>
 
     <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/searchResults.js') }}"></script>
 </body>
 
 </html>

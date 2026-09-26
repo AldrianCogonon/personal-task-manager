@@ -1,9 +1,8 @@
-const themeToggle = document.getElementById('themeToggle');
-const globalSearch = document.getElementById('globalSearch');
+const themeToggle = document.getElementById('themeToggle'); 
 const statusFilter = document.getElementById('statusFilter');
 const dateFilter = document.getElementById('dateFilter');
 const clearFilters = document.getElementById('clearFilters');
-const tasks = document.querySelectorAll('.recent-task');
+const recentList = document.getElementById('recentList');
 const filterEmpty = document.getElementById('filterEmpty');
 
 function setTheme(theme) {
@@ -63,22 +62,16 @@ function matchesDate(taskDate, filter) {
     return true;
 }
 
-function filterTasks() {
-    const search = globalSearch.value.toLowerCase().trim();
+function applyFilters() {
     const status = statusFilter.value;
     const date = dateFilter.value;
+    const tasks = document.querySelectorAll('.recent-task');
 
     let visibleTasks = 0;
 
     tasks.forEach(function (task) {
-        const name = task.dataset.taskName;
-        const description = task.dataset.description;
         const taskStatus = task.dataset.status;
         const taskDate = task.dataset.dueDate;
-
-        const matchesSearch =
-            name.includes(search) ||
-            description.includes(search);
 
         const matchesStatus =
             status === 'all' ||
@@ -88,7 +81,6 @@ function filterTasks() {
             matchesDate(taskDate, date);
 
         const visible =
-            matchesSearch &&
             matchesStatus &&
             matchesDateFilter;
 
@@ -102,16 +94,57 @@ function filterTasks() {
     filterEmpty.hidden = visibleTasks > 0;
 }
 
-globalSearch.addEventListener('input', filterTasks);
-statusFilter.addEventListener('change', filterTasks);
-dateFilter.addEventListener('change', filterTasks);
+function displayTasks(tasks) {
+    recentList.innerHTML = '';
 
-clearFilters.addEventListener('click', function () {
-    globalSearch.value = '';
-    statusFilter.value = 'all';
-    dateFilter.value = 'all';
+    tasks.forEach(function (task) {
+        const article = document.createElement('article');
 
-    filterTasks();
-});
+        article.className = 'recent-task';
+        article.dataset.status = task.status;
+        article.dataset.dueDate = task.due_date || '';
 
-filterTasks();
+        const info = document.createElement('div');
+        info.className = 'recent-task-info';
+
+        const title = document.createElement('h4');
+        title.textContent = task.task_name;
+
+        const description = document.createElement('p');
+        description.textContent =
+            task.description || 'No description provided.';
+
+        info.appendChild(title);
+        info.appendChild(description);
+
+        const dateContainer = document.createElement('div');
+        dateContainer.className = 'recent-task-date';
+
+        const dateLabel = document.createElement('span');
+        dateLabel.textContent = 'Due';
+
+        const dateValue = document.createElement('strong');
+        dateValue.textContent = task.due_date || 'No date';
+
+        dateContainer.appendChild(dateLabel);
+        dateContainer.appendChild(dateValue);
+
+        const status = document.createElement('span');
+        status.className = `status-badge ${task.status}`;
+        status.textContent =
+            task.status.charAt(0).toUpperCase() +
+            task.status.slice(1);
+
+        article.appendChild(info);
+        article.appendChild(dateContainer);
+        article.appendChild(status);
+
+        recentList.appendChild(article);
+    });
+
+    applyFilters();
+
+    if (tasks.length === 0) {
+        filterEmpty.hidden = false;
+    }
+}

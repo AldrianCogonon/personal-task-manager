@@ -1,20 +1,13 @@
 const themeToggle = document.getElementById('themeToggle');
-
 const filterButtons = document.querySelectorAll('.filter-button');
-
 const taskList = document.getElementById('taskList');
-
 const taskRows = [...document.querySelectorAll('.all-task-row')];
-
 const searchInput = document.getElementById('taskSearch');
-
 const taskSort = document.getElementById('taskSort');
 
 function setTheme(theme) {
     document.documentElement.dataset.theme = theme;
-
     localStorage.setItem('taskflow-theme', theme);
-
     themeToggle.textContent = theme === 'dark' ? '☀' : '☼';
 }
 
@@ -24,8 +17,7 @@ setTheme(
 
 themeToggle.addEventListener('click', function () {
     const currentTheme =
-        document.documentElement.dataset.theme;
-
+    document.documentElement.dataset.theme;
     setTheme(
         currentTheme === 'dark'
             ? 'light'

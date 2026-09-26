@@ -720,3 +720,55 @@ select {
 [hidden] {
     display: none !important;
 }
+.search-bar {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    z-index: 100;
+    display: none;
+}
+
+.search-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
+.search-result:hover {
+    background: var(--bg);
+}
+
+.search-result-icon {
+    font-size: 18px;
+    color: var(--muted);
+    flex-shrink: 0;
+}
+
+.search-result-name {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.search-no-results {
+    padding: 14px 16px;
+    color: var(--muted);
+    font-size: 14px;
+}
