@@ -14,7 +14,8 @@ A simple, lightweight personal task manager built with Laravel, PHP, and MariaDB
 * **ADD TASK**
 * **VIEW TASKS**
 * **EDIT TASK**
-* **Update & Delete:** 
+* **DELETE TASK**
+* **UPDATE STATUS** 
 
 ---
 
