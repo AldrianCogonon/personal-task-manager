@@ -12,9 +12,15 @@ class TaskController extends Controller
     {
         $tasks = Task::latest()->get();
 
-        return view('tasks.index', compact('tasks'));
-    }
+        $pendingTasks = $tasks
+            ->where('status', 'pending')
+            ->sortBy(function ($task) {
+                return $task->due_date ?? '9999-12-31';
+            })
+            ->take(6);
 
+        return view('tasks.index', compact('tasks', 'pendingTasks'));
+    }
     public function allTasks()
     {
         $tasks = Task::latest()->get();
@@ -90,5 +96,9 @@ class TaskController extends Controller
         return redirect()
             ->route('tasks.all')
             ->with('success', 'Task status updated!');
+    }
+    public function show(Task $task)
+    {
+        return view('tasks.show', compact('task'));
     }
 }

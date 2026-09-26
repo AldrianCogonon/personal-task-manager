@@ -1,236 +1,247 @@
-
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en" data-theme="light">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Tasks - TaskFlow</title>
-    <link rel="stylesheet" href="{{ asset('css/all_tasks.css') }}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>All Tasks - TaskFlow</title>
+        <link rel="stylesheet" href="{{ asset('css/all_tasks.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+        <script src="{{ asset('js/darkmode.js') }}" defer></script>
+    </head>
 
-<body>
-    <main class="app">
-        <aside class="nav-sidebar">
-            <div class="nav-logo">
-                <div class="logo-icon">✓</div>
-                <h1>TaskFlow</h1>
-            </div>
+    <body>
 
-            <nav class="nav-links">
-                <a href="{{ route('tasks.index') }}" class="nav-link">
-                    <span class="nav-icon">⌂</span>
-                    <span>Dashboard</span>
-                </a>
+        <main class="app">
 
-                <a href="{{ route('tasks.all') }}" class="nav-link active">
-                    <span class="nav-icon">☷</span>
-                    <span>All Tasks</span>
-                </a>
-            </nav>
+            <aside class="nav-sidebar">
 
-            <div class="sidebar-bottom">
-                <div class="user-profile">
-                    <div class="avatar">
-                        {{ strtoupper(substr(Auth::user()?->username ?? 'G', 0, 1)) }}
+                <div class="nav-logo">
+                    <div class="logo-icon">✓</div>
+                    <h1>TaskFlow</h1>
+                </div>
+
+                <nav class="nav-links">
+
+                    <a href="{{ route('tasks.index') }}" class="nav-link">
+                        <span class="nav-icon">⌂</span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="{{ route('tasks.all') }}" class="nav-link active">
+                        <span class="nav-icon">☷</span>
+                        <span>All Tasks</span>
+                    </a>
+
+                </nav>
+
+            </aside>
+
+            <section class="content">
+
+                <header class="topbar">
+
+                    <div class="search-bar">
+                        <span class="search-icon">⌕</span>
+
+                        <input
+                            type="text"
+                            id="taskSearch"
+                            placeholder="Search tasks..."
+                        >
                     </div>
 
-                    <div class="user-info">
-                        <span class="user-name">
-                            {{ Auth::user()?->username ?? 'Guest' }}
-                        </span>
-                        <span class="user-role">Personal Account</span>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <section class="content">
-            <header class="topbar">
-                <div class="search-bar">
-                    <span class="search-icon">⌕</span>
-                    <input type="text" id="taskSearch" placeholder="Search tasks...">
-                </div>
-
-                <div class="topbar-actions">
-                    <button class="icon-button">☼</button>
-                    <div class="avatar">
-                        {{ strtoupper(substr(Auth::user()?->username ?? 'G', 0, 1)) }}
-                    </div>
-                </div>
-            </header>
-
-            <div class="page-header">
-                <div>
-                    <h2>All Tasks</h2>
-                    <p>Manage and organize your tasks.</p>
-                </div>
-
-                <a href="{{ route('tasks.create') }}" class="add-task-button">
-                    + Add Task
-                </a>
-            </div>
-
-            <div class="tasks-toolbar">
-                <div class="task-filters">
-                    <button class="filter-button active" data-filter="all">
-                        All
-                        <span>{{ $tasks->count() }}</span>
+                    <button
+                        id="themeToggle"
+                        class="theme-button"
+                        type="button"
+                        aria-label="Toggle theme"
+                    >
+                        ☼
                     </button>
 
-                    <button class="filter-button" data-filter="pending">
-                        Pending
-                        <span>{{ $tasks->where('status', 'pending')->count() }}</span>
-                    </button>
+                </header>
 
-                    <button class="filter-button" data-filter="completed">
-                        Completed
-                        <span>{{ $tasks->where('status', 'completed')->count() }}</span>
-                    </button>
-                </div>
+                <div class="page-header">
 
-                <select class="task-sort" id="taskSort">
-                    <option value="newest">Newest first</option>
-                    <option value="oldest">Oldest first</option>
-                </select>
-            </div>
-
-            <section class="all-tasks-container">
-                <div class="all-tasks-header">
                     <div>
+                        <h2>All Tasks</h2>
+                        <p>Manage and organize your tasks.</p>
+                    </div>
+
+                    <a href="{{ route('tasks.create') }}" class="add-task-button"> + Add Task</a>
+                </div>
+
+                <div class="tasks-toolbar">
+                    <div class="task-filters">
+                        <button class="filter-button active" data-filter="all" type="button">
+                            All
+                            <span>{{ $tasks->count() }}</span>
+                        </button>
+
+                        <button class="filter-button" data-filter="pending" type="button">
+                            Pending
+                            <span>
+                                {{ $tasks->where('status', 'pending')->count() }}
+                            </span>
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="completed"
+                            type="button"
+                        >
+                            Completed
+                            <span>
+                                {{ $tasks->where('status', 'completed')->count() }}
+                            </span>
+                        </button>
+
+                    </div>
+
+                    <select
+                        class="task-sort"
+                        id="taskSort"
+                    >
+                        <option value="newest">
+                            Newest first
+                        </option>
+
+                        <option value="oldest">
+                            Oldest first
+                        </option>
+
+                        <option value="due">
+                            Due date
+                        </option>
+                    </select>
+
+                </div>
+
+                <section class="all-tasks-container">
+
+                    <div class="all-tasks-header">
+
                         <h3>Your Tasks</h3>
+
                         <p>
                             {{ $tasks->count() }}
                             {{ $tasks->count() === 1 ? 'task' : 'tasks' }}
                         </p>
+
                     </div>
-                </div>
 
-                <div class="all-task-list" id="taskList">
-                    @forelse($tasks as $task)
-                        <article class="all-task-row" data-status="{{ $task->status }}">
-                            <div class="task-status-control">
-                                <form action="{{ route('tasks.updateStatus', $task->id) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
+                    <div class="all-task-list" id="taskList">
+                        @forelse($tasks as $task)
 
-                                    <button
-                                        type="submit"
-                                        class="task-check {{ $task->status === 'completed' ? 'completed' : '' }}"
-                                        title="Update status"
+                            <article
+                                class="all-task-row"
+                                data-status="{{ $task->status }}"
+                                data-created="{{ $task->created_at->timestamp }}"
+                                data-due="{{ $task->due_date ? $task->due_date->timestamp : 9999999999999 }}"
+                            >
+
+                                <div class="task-status-control">
+
+                                    <form
+                                        action="{{ route('tasks.updateStatus', $task->id) }}"
+                                        method="POST"
                                     >
-                                        @if($task->status === 'completed')
-                                            ✓
-                                        @endif
-                                    </button>
-                                </form>
-                            </div>
 
-                            <div class="all-task-info">
-                                <h4 class="{{ $task->status === 'completed' ? 'task-completed' : '' }}">
-                                    {{ $task->title }}
-                                </h4>
+                                        @csrf
+                                        @method('PATCH')
 
-                                <p>
-                                    {{ $task->description ?? 'No description provided.' }}
-                                </p>
+                                        <button
+                                            type="submit"
+                                            class="task-check {{ $task->status === 'completed' ? 'completed' : '' }}"
+                                            title="Update status"
+                                        >
 
-                                <div class="task-meta">
-                                    @if(isset($task->due_date))
-                                        <span>
-                                            ◷
-                                            {{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}
-                                        </span>
-                                    @endif
+                                            @if($task->status === 'completed')
+                                                ✓
+                                            @endif
 
-                                    <span>
-                                        Created {{ $task->created_at->format('M d, Y') }}
-                                    </span>
+                                        </button>
+                                    </form>
                                 </div>
-                            </div>
 
-                            <div>
-                                <span class="status {{ $task->status === 'completed' ? 'completed' : 'pending' }}">
-                                    {{ ucfirst($task->status) }}
-                                </span>
-                            </div>
+                                <div class="all-task-info">
 
-                            <div class="all-task-actions">
-                                <a
-                                    href="{{ route('tasks.edit', $task->id) }}"
-                                    class="task-action edit"
-                                    title="Edit task"
-                                >
-                                    ✎
-                                </a>
+                                    <h4 class="{{ $task->status === 'completed' ? 'task-completed' : '' }}">{{ $task->task_name }}</h4>
 
-                                <form
-                                    action="{{ route('tasks.destroy', $task->id) }}"
-                                    method="POST"
-                                    onsubmit="return confirm('Are you sure you want to delete this task?');"
-                                >
-                                    @csrf
-                                    @method('DELETE')
+                                    <p>
+                                        {{ $task->description ?: 'No description provided.' }}
+                                    </p>
 
-                                    <button
-                                        type="submit"
-                                        class="task-action delete"
-                                        title="Delete task"
+                                    <div class="task-meta">
+
+                                        @if($task->due_date)
+
+                                            <span>
+                                                ◷
+                                                {{ $task->due_date->format('M d, Y') }}
+                                            </span>
+
+                                        @endif
+
+                                        <span>
+                                            Created {{ $task->created_at->format('M d, Y') }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <span class="status {{ $task->status }}">{{ ucfirst($task->status) }}</span>
+                                </div>
+
+                                <div class="all-task-actions">
+
+                                    <a href="{{ route('tasks.show', $task->id) }}" class="task-action" title="View task">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+
+                                    <a href="{{ route('tasks.edit', $task->id) }}" class="task-action" title="Edit task">
+                                       <i class="fa-solid fa-pen"></i>
+                                    </a>
+
+                                    <form
+                                        action="{{ route('tasks.destroy', $task->id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this task?')"
                                     >
-                                        ×
-                                    </button>
-                                </form>
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            class="task-action"
+                                            title="Delete task"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </article>
+
+                        @empty
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    ✓
+                                </div>
+
+                                <h4>No tasks yet</h4>
+
+                                <p>Create your first task to get started.</p>
+
+                                <a href="{{ route('tasks.create') }}" class="add-task-button">+ Create Task</a>
+
                             </div>
-                        </article>
-                    @empty
-                        <div class="empty-state">
-                            <div class="empty-icon">✓</div>
-                            <h4>No tasks yet</h4>
-                            <p>Create your first task to get started.</p>
-
-                            <a href="{{ route('tasks.create') }}" class="add-task-button">
-                                + Create Task
-                            </a>
-                        </div>
-                    @endforelse
-                </div>
+                        @endforelse
+                    </div>
+                </section>
             </section>
-        </section>
-    </main>
-
-    <script>
-        const filterButtons = document.querySelectorAll('.filter-button');
-        const taskRows = document.querySelectorAll('.all-task-row');
-        const searchInput = document.getElementById('taskSearch');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                const filter = button.dataset.filter;
-
-                taskRows.forEach(task => {
-                    task.style.display =
-                        filter === 'all' || task.dataset.status === filter
-                            ? 'grid'
-                            : 'none';
-                });
-            });
-        });
-
-        searchInput.addEventListener('input', () => {
-            const search = searchInput.value.toLowerCase();
-
-            taskRows.forEach(task => {
-                task.style.display =
-                    task.textContent.toLowerCase().includes(search)
-                        ? 'grid'
-                        : 'none';
-            });
-        });
-    </script>
-</body>
-
-</html>
-
+        </main>
+    </body> 
+    </html>
