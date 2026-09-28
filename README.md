@@ -6,7 +6,7 @@
 
 # Personal Task Manager
 
-A simple, lightweight personal task manager built with Laravel, PHP, and MariaDB for managing daily tasks and assignments.
+A simple, lightweight personal task manager built with Laravel, PHP, and MYSQL for managing daily tasks and assignments.
 
 ---
 
