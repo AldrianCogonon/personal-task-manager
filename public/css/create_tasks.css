@@ -46,12 +46,7 @@ a {
     text-decoration: none;
 }
 
-button,
-input,
-textarea,
-select {
-    font-family: inherit;
-}
+button, input, textarea, select { font-family: inherit; }
 
 .app {
     display: flex;
@@ -171,13 +166,9 @@ select {
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.theme-button:hover {
-    background: var(--hover);
-}
+.theme-button:hover { background: var(--hover); }
 
-.theme-button:focus-visible {
-    border-color: var(--blue);
-}
+.theme-button:focus-visible { border-color: var(--blue); }
 .page-header {
     width: 100%;
     max-width: 900px;
@@ -192,9 +183,7 @@ select {
     transition: color 0.2s ease;
 }
 
-.back-link:hover {
-    color: var(--blue);
-}
+.back-link:hover { color: var(--blue); }
 
 .page-header h2 {
     color: var(--text);
@@ -240,9 +229,7 @@ select {
     font-size: 13px;
 }
 
-.form-group {
-    margin-bottom: 20px;
-}
+.form-group { margin-bottom: 20px; }
 
 .form-row {
     display: grid;
@@ -258,9 +245,7 @@ select {
     font-weight: 600;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.form-group input, .form-group textarea, .form-group select {
     width: 100%;
     border: 1px solid var(--input-border);
     border-radius: 8px;
@@ -271,8 +256,7 @@ select {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-group input,
-.form-group select {
+.form-group input, .form-group select {
     height: 42px;
     padding: 0 12px;
 }
@@ -284,14 +268,11 @@ select {
     line-height: 1.5;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
+.form-group input::placeholder, .form-group textarea::placeholder {
     color: var(--placeholder);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
     border-color: var(--blue);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
@@ -312,8 +293,7 @@ select {
     border-top: 1px solid var(--soft-border);
 }
 
-.cancel-button,
-.create-button {
+.cancel-button, .create-button {
     height: 40px;
     display: inline-flex;
     align-items: center;
@@ -332,9 +312,7 @@ select {
     color: var(--muted);
 }
 
-.cancel-button:hover {
-    background: var(--hover);
-}
+.cancel-button:hover { background: var(--hover); }
 
 .create-button {
     border: 1px solid var(--blue);
@@ -342,6 +320,4 @@ select {
     color: #ffffff;
 }
 
-.create-button:hover {
-    background: var(--blue-hover);
-}
+.create-button:hover { background: var(--blue-hover); }
