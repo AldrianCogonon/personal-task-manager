@@ -25,7 +25,8 @@
                         <div class="logo-attribution">
                             <a href="https://www.flaticon.com/free-icons/bird" title="bird icons" target="_blank" rel="noopener noreferrer"></a>
                         </div>
-
+                    </div>
+                    <div>
                         <nav class="nav-links">
                             <a href="{{ route('tasks.index') }}" class="nav-link active">
                                 <span class="nav-icon">⌂</span>

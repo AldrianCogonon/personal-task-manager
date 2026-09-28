@@ -165,8 +165,7 @@
     padding: 0;
 }
 
-.task-view-actions .save-button,
-.task-view-actions .cancel-button {
+.task-view-actions .save-button, .task-view-actions .cancel-button {
     height: 40px;
     display: inline-flex;
     align-items: center;
@@ -215,10 +214,4 @@
     margin: 0;
     font-family: inherit;
     line-height: normal;
-}
-
-@media (max-width: 1200px) {
-    .content {
-        padding: 0 25px 35px;
-    }
 }
