@@ -29,8 +29,12 @@ A simple, lightweight personal task manager built with Laravel, PHP, and MariaDB
 ---
 ##LIGHT MODE/TO-DO LIST/SEARCH BAR
 
-![TaskFlow Dashboard](screenshots/LightMode.png)
+## Dashboard
+
+<img src="screenshots/LightMode.png" alt="LightMode" width="900">
 ---
 ##DARK MODE/TO-DO LIST/SEARCH BAR
 
-![TaskFlow Dashboard](screenshots/DarkMode.png)
+## Dashboard
+
+<img src="screenshots/DarkMode.png" alt="DarkMode" width="900">
