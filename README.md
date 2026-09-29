@@ -83,26 +83,16 @@ The search uses **searchResults.js** and the Laravel **tasks.search** route.
 
 The flow is:
 
-User types a task name
-        ↓
-searchResults.js detects the input
-        ↓
-Wait 300 milliseconds
-        ↓
-fetch() sends the search request
-        ↓
-/tasks/search?q=...
-        ↓
-TaskController@search
-        ↓
-Task model searches task_name
-        ↓
-Laravel returns JSON
-        ↓
-JavaScript displays the results
-        ↓
-User clicks a result
-        ↓
+User types a task name →
+searchResults.js detects the input →
+Wait 300 milliseconds →
+fetch() sends the search request →
+/tasks/search?q=... →
+TaskController@search →
+Task model searches task_name →
+Laravel returns JSON →
+JavaScript displays the results →
+User clicks a result →
 The selected task's View page opens
 
 The Controller uses a **LIKE** query, so part of a task name can match the search.
