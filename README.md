@@ -56,49 +56,14 @@ The Blade View is what the user interacts with. The Route receives the request a
 
 ---
 
-# ROUTES AND CONTROLLER METHODS
-
-## Routes
-
-| Method | URL | Route Name | Purpose |
-|---|---|---|---|
-| GET | `/` | `tasks.index` | Dashboard |
-| GET | `/tasks/search` | `tasks.search` | Search tasks |
-| GET | `/tasks/all` | `tasks.all` | Show all tasks |
-| GET | `/tasks/create` | `tasks.create` | Show Create Task form |
-| POST | `/tasks` | `tasks.store` | Save a new task |
-| GET | `/tasks/{task}` | `tasks.show` | View one task |
-| GET | `/tasks/{task}/edit` | `tasks.edit` | Show Edit Task form |
-| PUT | `/tasks/{task}` | `tasks.update` | Update a task |
-| DELETE | `/tasks/{task}` | `tasks.destroy` | Delete a task |
-| PATCH | `/tasks/{task}/status` | `tasks.updateStatus` | Change task status |
-
-## Controller Methods
-
-| Method | Purpose |
-|---|---|
-| `index()` | Gets tasks and prepares Dashboard data |
-| `allTasks()` | Gets tasks for the All Tasks page |
-| `create()` | Opens the Create Task form |
-| `store()` | Validates and saves a new task |
-| `show()` | Displays one specific task |
-| `edit()` | Opens the Edit Task form |
-| `update()` | Validates and updates an existing task |
-| `destroy()` | Deletes a task |
-| `updateStatus()` | Changes pending/completed status |
-| `search()` | Searches task names and returns JSON results |
-
----
-
 # DASHBOARD
 
 The Dashboard is the main page of TaskFlow. It gives the user an overview of their tasks and provides quick access to the main task management features.
 
 ![TaskFlow Light Mode](screenshots/dashboard-light.png)
-![TaskFlow Dark Mode](screenshots/dashboard-light-recent.png)
+![TaskFlow Light Mode](screenshots/dashboard-light-recent.png)
 ![TaskFlow Dark Mode](screenshots/dashboard-darkmode.png)
 ![TaskFlow Dark Mode](screenshots/dashboard-darkmode-recent.png)
-
 ## 1. Sidebar Navigation
 
 The sidebar is located on the left side of the Dashboard. It contains the TaskFlow logo and two navigation links:
@@ -109,6 +74,8 @@ The sidebar is located on the left side of the Dashboard. It contains the TaskFl
 The links use Laravel named routes such as **tasks.index** and **tasks.all**.
 
 ## 2. Search Bar
+![Search with match](screenshots/searcwresults.png)
+![Search with out matchi](screenshots/searcnresults.png)
 
 The Dashboard has a global search bar at the top. It searches tasks by task name.
 
@@ -316,7 +283,8 @@ JavaScript handles filters, theme, and search interaction
 
 The All Tasks page displays the complete list of saved tasks and provides the main task management controls.
 
-![TaskFlow All Tasks](screenshots/LightMode.png)
+![TaskFlow Light Mode](screenshots/all-lightmode.png)
+![TaskFlow Light Mode](screenshots/all-darkmode.png)
 
 The page can:
 
@@ -326,6 +294,7 @@ The page can:
 - View an individual task
 - Edit a task
 - Delete a task
+- Add a task
 - Change a task's status
 - Open the Create Task page
 
@@ -333,63 +302,56 @@ The page can:
 
 The All Tasks page has All, Pending, and Completed filters.
 
-`all_tasks.js` reads the task's `data-status` value and shows only the tasks that match the selected filter.
+**all_tasks.js** reads the task's **data-status** value and shows only the tasks that match the selected filter.
 
 ## Search
 
-The All Tasks page also has a local search. Instead of making a new database request, `all_tasks.js` checks the text of the task rows that are already loaded on the page.
+The All Tasks page also has a local search. Instead of making a new database request, **all_tasks.js** checks the text of the task rows that are already loaded on the page.
 
-This is different from the global search, which calls Laravel's `/tasks/search` endpoint.
+This is different from the global search, which calls Laravel's **/tasks/search** endpoint.
 
 ## Sorting
 
 The All Tasks page can sort the loaded rows by:
-
 - Newest
 - Oldest
 - Due Date
 
-The JavaScript reads the task dates stored in the row's `data-created` and `data-due` values and changes the order of the rows.
+The JavaScript reads the task dates stored in the row's **data-created** and **data-due** values and changes the order of the rows.
 
 ## View Task
-
+![view-light](screenshots/view-light.png)
+![view-dark](screenshots/view-dark.png)
 Each task has a View icon using:
 
-```blade
 {{ route('tasks.show', $task->id) }}
-```
 
 For a task with ID 3, the link becomes:
 
-```text
-/tasks/3
-```
+**/tasks/3**
 
-Laravel uses the `tasks.show` route and the `show(Task $task)` Controller method to find and display that specific task.
+Laravel uses the **tasks.show** route and the **show(Task $task)** Controller method to find and display that specific task.
 
 ## Edit Task
-
+![view-dark](screenshots/edit-dark.png)
+![view-dark](screenshots/edit.png)
+![view-dark](screenshots/edit-status.png)
+![view-dark](screenshots/edit-due.png)
 The Edit icon opens:
 
-```text
-/tasks/{id}/edit
-```
+**/tasks/{id}/edit**
 
-The Controller receives the task, sends it to `edit.blade.php`, and the form displays the current values.
+The Controller receives the task, sends it to **edit.blade.php**, and the form displays the current values.
 
 ## Delete Task
 
 The Delete button submits a DELETE request to:
 
-```text
-/tasks/{id}
-```
+**/tasks/{id}**
 
 The Controller then uses:
 
-```php
-$task->delete();
-```
+**$task->delete();**
 
 to remove the task from the database.
 
@@ -397,9 +359,7 @@ to remove the task from the database.
 
 The circular status button sends a PATCH request to:
 
-```text
-/tasks/{id}/status
-```
+**/tasks/{id}/status**
 
 The Controller changes the status between pending and completed.
 
@@ -409,21 +369,15 @@ The Controller changes the status between pending and completed.
 
 The Create Task page is stored in:
 
-```text
-resources/views/tasks/create.blade.php
-```
+**resources/views/tasks/create.blade.php**
 
 The page is opened with:
 
-```text
-GET /tasks/create
-```
+**GET /tasks/create**
 
 which calls:
 
-```text
-TaskController@create
-```
+**TaskController@create**
 
 The Controller returns the Create Task Blade view.
 
@@ -431,19 +385,14 @@ The Controller returns the Create Task Blade view.
 
 When the user submits the form, it sends:
 
-```text
-POST /tasks
-```
+**POST /tasks**
 
 The route calls:
 
-```text
-TaskController@store
-```
+**TaskController@store**
 
 The flow is:
 
-```text
 Fill out the form
       ↓
 Click Create Task
@@ -461,33 +410,28 @@ Task::create()
 Database
       ↓
 Redirect to All Tasks
-```
 
 ## Validation
 
 The Controller validates the data using:
 
-```php
 $validated = $request->validate([
     'task_name' => 'required|max:255',
     'description' => 'nullable',
     'status' => 'required|in:pending,completed',
     'due_date' => 'nullable|date|after_or_equal:today',
 ]);
-```
 
 The validation means:
 
-- `task_name` is required and has a maximum length of 255 characters.
-- `description` can be empty.
-- `status` must be either `pending` or `completed`.
-- `due_date` can be empty, but when entered it must be a valid date that is today or later.
+- **task_name** is required and has a maximum length of 255 characters.
+- **description** can be empty.
+- **status** must be either **pending** or **completed**.
+- **due_date** can be empty, but when entered it must be a valid date that is today or later.
 
 After validation, the task is saved with:
 
-```php
-Task::create($validated);
-```
+**Task::create($validated);**
 
 ---
 
@@ -497,18 +441,14 @@ The View Task page shows one specific task instead of the entire task list.
 
 The route is:
 
-```text
-GET /tasks/{task}
-```
+**GET /tasks/{task}**
 
 and the Controller method is:
 
-```php
 public function show(Task $task)
 {
     return view('tasks.show', compact('task'));
 }
-```
 
 Laravel uses route model binding to find the task using the ID in the URL.
 
@@ -525,7 +465,6 @@ The page also provides Edit Task and Delete Task actions.
 
 The flow is:
 
-```text
 Click View icon
       ↓
 /tasks/{id}
@@ -539,7 +478,6 @@ Find the Task
 show.blade.php
       ↓
 Display task details
-```
 
 ---
 
@@ -547,56 +485,40 @@ Display task details
 
 The Edit Task page uses:
 
-```text
-GET /tasks/{task}/edit
-```
+**GET /tasks/{task}/edit**
 
 The route calls:
 
-```text
-TaskController@edit
-```
+**TaskController@edit**
 
 The Controller sends the selected Task to:
 
-```text
-edit.blade.php
-```
+**edit.blade.php**
 
 The form displays the existing values of the task.
 
 When the user saves the changes, the form uses PUT:
 
-```text
-PUT /tasks/{id}
-```
+**PUT /tasks/{id}**
 
 and calls:
 
-```text
-TaskController@update
-```
+**TaskController@update**
 
 The Controller validates the updated information and uses:
 
-```php
-$task->update($validated);
-```
+**$task->update($validated);**
 
 to update the existing database record.
 
 The edit validation is:
 
-```php
 $validated = $request->validate([
     'task_name' => 'required|max:255',
     'description' => 'nullable',
     'status' => 'required|in:pending,completed',
     'due_date' => 'nullable|date',
 ]);
-```
-
-The Edit form does not use the `after_or_equal:today` rule that is used when creating a new task.
 
 ---
 
@@ -606,15 +528,11 @@ The Delete button submits a DELETE request using Laravel method spoofing.
 
 The route is:
 
-```text
-DELETE /tasks/{id}
-```
+**DELETE /tasks/{id}**
 
 and the Controller uses:
 
-```php
-$task->delete();
-```
+**$task->delete();**
 
 to remove the task from the database.
 
@@ -622,7 +540,6 @@ If there are no tasks left, the application resets the table's AUTO_INCREMENT va
 
 The flow is:
 
-```text
 Click Delete
       ↓
 DELETE /tasks/{id}
@@ -636,33 +553,27 @@ $task->delete()
 Database
       ↓
 Redirect to All Tasks
-```
 
 ---
 
 # DATABASE
 
-The application uses a `task_manager` database with a main `tasks` table.
+The application uses a task_manager database with a main tasks table.
 
 The migration file is:
 
-```text
-database/migrations/2026_09_21_181234_create_tasks_table.php
-```
+**database/migrations/2026_09_21_181234_create_tasks_table.php**
 
 The table contains:
 
-| Field | Purpose |
-|---|---|
-| `id` | Unique ID of the task |
-| `task_name` | Name of the task |
-| `description` | Additional task information |
-| `status` | `pending` or `completed` |
-| `due_date` | Task deadline, if provided |
-| `created_at` | Date and time the record was created |
-| `updated_at` | Date and time the record was last updated |
-
-The migration defines the table using Laravel's Schema builder.
+Field               Purpose
+- id                Unique ID of the task
+- task_name         Name of the task
+- description       Additional task information
+- status            pending or completed
+- due_date          Task deadline, if provided
+- created_at        Date and time the record was created
+- updated_at        Date and time the record was last updated
 
 ---
 
@@ -670,30 +581,24 @@ The migration defines the table using Laravel's Schema builder.
 
 The Task model is:
 
-```text
 app/Models/Task.php
-```
 
-It extends Laravel's Eloquent `Model` class.
+It extends Laravel's Eloquent Model class.
 
 The model defines the fields that can be mass assigned:
 
-```php
 protected $fillable = [
     'task_name',
     'description',
     'status',
     'due_date',
 ];
-```
 
 It also casts the due date as a date:
 
-```php
 protected $casts = [
     'due_date' => 'date',
 ];
-```
 
 This allows the Blade files to format the date easily.
 
@@ -701,16 +606,14 @@ This allows the Blade files to format the date easily.
 
 # ELOQUENT
 
-Eloquent is Laravel's ORM, or Object-Relational Mapper. I use the Task model and Eloquent methods instead of writing raw SQL for the basic task operations.
+I use the Task model and Eloquent methods instead of writing raw SQL for the basic task operations.
 
 Examples used in the project:
 
-```php
 Task::latest()->get();
 Task::create($validated);
 $task->update($validated);
 $task->delete();
-```
 
 These are used to retrieve, create, update, and delete task records.
 
@@ -718,34 +621,28 @@ These are used to retrieve, create, update, and delete task records.
 
 # BLADE AND FORMS
 
-Blade is Laravel's templating engine. I use Blade to display task data and connect the interface to Laravel routes.
+I use Blade to display task data and connect the interface to Laravel routes.
 
 For example:
 
-```blade
 {{ $task->task_name }}
-```
 
-displays a task name.
+which displays a task name.
 
 The project also uses Blade directives such as:
 
-```text
-@if
-@forelse
-@empty
-@csrf
-@method
-@error
-```
+- @if
+- @forelse
+- @empty
+- @csrf
+- @method
+- @error
 
 ## CSRF
 
 The forms use:
 
-```blade
-@csrf
-```
+**@csrf**
 
 This adds Laravel's CSRF token to the form so Laravel can verify the request.
 
@@ -753,13 +650,11 @@ This adds Laravel's CSRF token to the form so Laravel can verify the request.
 
 The forms use:
 
-```blade
 @method('PUT')
 @method('PATCH')
 @method('DELETE')
-```
 
-HTML forms normally support GET and POST directly, so Laravel uses method spoofing to allow these forms to work with PUT, PATCH, and DELETE routes.
+I used method spoofing here because HTML forms can only natively send GET and POST requests, but to adhere to strict RESTful standards and protect our application from destructive GET route exploits, I used Laravel's @method directive to securely bypass this browser limitation for our PUT and DELETE actions.
 
 ---
 
@@ -767,7 +662,7 @@ HTML forms normally support GET and POST directly, so Laravel uses method spoofi
 
 JavaScript is used for features that need interaction in the browser.
 
-## `dashboard.js`
+## dashboard.js
 
 Handles:
 
@@ -776,7 +671,7 @@ Handles:
 - Clear filters
 - Dark/light mode
 
-## `all_tasks.js`
+## all_tasks.js
 
 Handles:
 
@@ -786,23 +681,20 @@ Handles:
 - Sorting by oldest
 - Sorting by due date
 
-## `searchResults.js`
+## searchResults.js
 
 Handles the global search bar. It sends the search request to Laravel, receives JSON, and displays the search results.
 
-## `darkmode.js`
+## darkmode.j`
 
-Handles the theme toggle by changing the current `data-theme` and saving the selected theme in `localStorage`.
+Handles the theme toggle by changing the current **data-theme** and saving the selected theme in **localStorage**.
 
 ---
 
 # CRUD FLOW
 
-CRUD means Create, Read, Update, and Delete.
+**Create**
 
-## Create
-
-```text
 create.blade.php
       ↓
 POST /tasks
@@ -812,11 +704,9 @@ store()
 Task::create()
       ↓
 Database
-```
 
-## Read
+**Read**
 
-```text
 Database
       ↓
 Task model
@@ -824,17 +714,13 @@ Task model
 Controller
       ↓
 Blade View
-```
 
 Reading one task uses:
 
-```text
-show(Task $task)
-```
+**show(Task $task)**
 
-## Update
+**Update**
 
-```text
 edit.blade.php
       ↓
 PUT /tasks/{id}
@@ -844,17 +730,13 @@ update()
 $task->update()
       ↓
 Database
-```
 
 Changing only the status uses PATCH:
 
-```text
-PATCH /tasks/{id}/status
-```
+**PATCH /tasks/{id}/status**
 
-## Delete
+**Delete**
 
-```text
 Delete form
       ↓
 DELETE /tasks/{id}
@@ -864,81 +746,35 @@ destroy()
 $task->delete()
       ↓
 Database
-```
-
----
-
-# WHY I USED THIS STRUCTURE
-
-I used the MVC structure so the application is separated into different responsibilities.
-
-The Model handles the task data and database interaction.
-
-The Controller handles the application logic, validation, and responses.
-
-The View displays the user interface.
-
-JavaScript handles browser-side interaction such as filters, search results, and theme switching.
-
-CSS handles the appearance and layout.
-
-This makes the project easier to organize and maintain than putting everything into one file.
-
----
-
-# WHY I USED LARAVEL
-
-I used Laravel because it provides the structure and tools I needed for routing, controllers, models, validation, Blade views, and database operations.
-
-It also makes it easier to organize the project using MVC.
-
-# WHY I USED BLADE
-
-I used Blade because it is Laravel's templating engine. It allows me to display database values in HTML and use Laravel features such as loops, conditions, routes, forms, and validation errors.
-
-# WHY I USED ELOQUENT
-
-I used Eloquent because it lets me work with the database using the Task model and methods such as `create()`, `update()`, `delete()`, `where()`, and `get()`.
-
-# WHY I USED JAVASCRIPT
-
-I used JavaScript for browser interactions such as filtering tasks, sorting tasks, showing global search results, and changing the theme.
-
-# WHY I USED LOCALSTORAGE
-
-I used `localStorage` to remember the user's selected dark or light theme even after the page is refreshed.
 
 ---
 
 # COMPLETE FEATURE FLOW
 
-```text
                     TASKFLOW
                        |
-          +------------+------------+
+          ---------------------------
           |                         |
-          ↓                         ↓
+          |                         |
       Blade Views              JavaScript
           |                         |
-          ↓                         ↓
+          |                         |
         Routes                 Browser Interaction
           |
-          ↓
+          |
      TaskController
           |
-          ↓
+          |
        Task Model
           |
-          ↓
+          |
       MariaDB
           |
-          ↓
+          |
       tasks table
-```
 
 The main task request flow is:
 
-```text
 User
  ↓
 Blade
@@ -954,16 +790,6 @@ Database
 Controller
  ↓
 Blade
-```
 
 The project uses this structure for all major task operations, while JavaScript handles features that can be performed directly in the browser.
 
----
-
-# CONCLUSION
-
-TaskFlow is a Laravel-based personal task manager that uses MVC architecture to separate the user interface, application logic, and database operations.
-
-The application supports the full CRUD process and also includes status updates, individual task viewing, search, filtering, sorting, a To-Do List, task statistics, and dark/light mode.
-
-The Dashboard provides the task overview, All Tasks provides the complete task list and management controls, Create and Edit pages handle forms, and the View Task page displays the details of one selected task.
