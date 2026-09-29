@@ -34,23 +34,7 @@ Mysql
 
 The basic flow of my Laravel application is:
 
-User
- ↓
-Blade View
- ↓
-Route
- ↓
-Controller
- ↓
-Model
- ↓
-Database
- ↓
-Controller
- ↓
-Blade View
- ↓
-User
+**User → Blade View → Route → Controller → Model → Database → Controller → Blade View → User**
 
 The Blade View is what the user interacts with. The Route receives the request and sends it to the correct Controller method. The Controller handles the application logic and uses the Task Model when database data is needed. The Model communicates with the database. The Controller then returns a View or redirects the user.
 
@@ -83,17 +67,7 @@ The search uses **searchResults.js** and the Laravel **tasks.search** route.
 
 The flow is:
 
-User types a task name →
-searchResults.js detects the input →
-Wait 300 milliseconds →
-fetch() sends the search request →
-/tasks/search?q=... →
-TaskController@search →
-Task model searches task_name →
-Laravel returns JSON →
-JavaScript displays the results →
-User clicks a result →
-The selected task's View page opens
+**User types a task name → searchResults.js detects the input → Wait 300 milliseconds → fetch() sends the search request → /tasks/search?q=... → TaskController@search → Task model searches task_name → Laravel returns JSON → JavaScript displays the results → User clicks a result → The selected task's View page opens**
 
 The Controller uses a **LIKE** query, so part of a task name can match the search.
 
@@ -117,13 +91,7 @@ The Add Task button uses the **tasks.create** route to open the Create Task form
 
 The flow is:
 
-Click Add Task
-      ↓
-tasks.create
-      ↓
-TaskController@create
-      ↓
-create.blade.php
+**Click Add Task → tasks.create → TaskController@create → create.blade.php**
 
 ## 5. Task Statistics
 
@@ -173,15 +141,7 @@ The circular checkbox in the To-Do List sends a PATCH request to:
 
 The flow is:
 
-Click checkbox
-      ↓
-PATCH /tasks/{id}/status
-      ↓
-tasks.updateStatus
-      ↓
-TaskController@updateStatus
-      ↓
-Update the status in the database
+**Click checkbox → PATCH /tasks/{id}/status → tasks.updateStatus → TaskController@updateStatus → Update the status in the database**
 
 The Controller changes the status using:
 
@@ -239,12 +199,15 @@ The Recent Tasks section also has a Date filter with:
 The JavaScript reads each task's due date and compares it with the current date. The user can also combine the Status and Date filters. A task must match both selected conditions to remain visible.
 
 ## 11. Clear Filters
+The Clear filters button removes the currently selected Status and Date filters from the Recent Tasks section. When clicked, JavaScript resets the Status filter to All and the Date filter to All dates. The tasks are then checked again, allowing all recent tasks that were previously hidden by the filters to be displayed.
 
-The **Clear filters** button resets the Status filter to **All** and the Date filter to **All dates**.
+**Click Clear Filters → Reset Status → Reset Date → Check Tasks Again → Show Recent Tasks**
 
 ## 12. View All
 
-The **View all** link uses the **tasks.all** route and opens the All Tasks page.
+The View all → link takes the user from the Dashboard to the All Tasks page. It uses the tasks.all route, which calls TaskController@allTasks to retrieve the tasks and display them in all_tasks.blade.php. This gives the user access to the complete task list and additional task management features such as viewing, editing, deleting, filtering, sorting, and updating task status.
+
+**Click View All → tasks.all → TaskController@allTasks → All Tasks Page**
 
 ## 13. Dashboard Empty States
 
@@ -256,20 +219,13 @@ The Dashboard also handles cases where there is no data to display.
 
 ## Dashboard Flow
 
-User opens /
-      ↓
-tasks.index
-      ↓
-TaskController@index
-      ↓
-Task::latest()->get()
-      ↓
-Prepare $tasks and $pendingTasks
-      ↓
-index.blade.php
-      ↓
-Dashboard is displayed
-      ↓
+User opens / →
+tasks.index →
+TaskController@index →
+Task::latest()->get() →
+Prepare $tasks and $pendingTasks →
+index.blade.php →
+Dashboard is displayed →
 JavaScript handles filters, theme, and search interaction
 
 ---
@@ -279,8 +235,6 @@ JavaScript handles filters, theme, and search interaction
 The All Tasks page displays the complete list of saved tasks and provides the main task management controls.
 
 ![TaskFlow Light Mode](screenshots/all.png)
-![TaskFlow Light Mode](screenshots/all-pending.png)
-![TaskFlow Light Mode](screenshots/all-complete.png)
 
 The page can:
 
@@ -295,7 +249,9 @@ The page can:
 - Open the Create Task page
 
 ## Status Filter
-
+![TaskFlow Light Mode](screenshots/all-new.png)
+![TaskFlow Light Mode](screenshots/all-due.png)
+![TaskFlow Light Mode](screenshots/all-old.png)
 The All Tasks page has All, Pending, and Completed filters.
 
 **all_tasks.js** reads the task's **data-status** value and shows only the tasks that match the selected filter.
@@ -307,7 +263,9 @@ The All Tasks page also has a local search. Instead of making a new database req
 This is different from the global search, which calls Laravel's **/tasks/search** endpoint.
 
 ## Sorting
-
+![TaskFlow Light Mode](screenshots/all.png)
+![TaskFlow Light Mode](screenshots/all-pending.png)
+![TaskFlow Light Mode](screenshots/all-complete.png)
 The All Tasks page can sort the loaded rows by:
 - Newest
 - Oldest
@@ -393,22 +351,8 @@ The route calls:
 The flow is:
 
 Fill out the form
-      ↓
-Click Create Task
-      ↓
-POST /tasks
-      ↓
-tasks.store
-      ↓
-TaskController@store
-      ↓
-Validate the form
-      ↓
-Task::create()
-      ↓
-Database
-      ↓
-Redirect to All Tasks
+
+**Click Create Task → POST /tasks → tasks.store → TaskController@store → Validate the form → Task::create() → Database → Redirect to All Tasks**
 
 ## Validation
 
@@ -464,19 +408,7 @@ The page also provides Edit Task and Delete Task actions.
 
 The flow is:
 
-Click View icon
-      ↓
-/tasks/{id}
-      ↓
-tasks.show
-      ↓
-TaskController@show
-      ↓
-Find the Task
-      ↓
-show.blade.php
-      ↓
-Display task details
+**Click View icon → /tasks/{id} → tasks.show → TaskController@show → Find the Task → show.blade.php → Display task details**
 
 ---
 
@@ -539,19 +471,7 @@ If there are no tasks left, the application resets the table's AUTO_INCREMENT va
 
 The flow is:
 
-Click Delete
-      ↓
-DELETE /tasks/{id}
-      ↓
-tasks.destroy
-      ↓
-TaskController@destroy
-      ↓
-$task->delete()
-      ↓
-Database
-      ↓
-Redirect to All Tasks
+**Click Delete → DELETE /tasks/{id} → tasks.destroy → TaskController@destroy → $task->delete() → Database → Redirect to All Tasks**
 
 ---
 
@@ -580,7 +500,7 @@ Field               Purpose
 
 The Task model is:
 
-app/Models/Task.php
+**app/Models/Task.php**
 
 It extends Laravel's Eloquent Model class.
 
@@ -653,7 +573,7 @@ The forms use:
 @method('PATCH')
 @method('DELETE')
 
-I used method spoofing here because HTML forms can only natively send GET and POST requests, but to adhere to strict RESTful standards and protect our application from destructive GET route exploits, I used Laravel's @method directive to securely bypass this browser limitation for our PUT and DELETE actions.
+Method spoofing lets us use PUT, PATCH, and DELETE even though normal HTML forms mainly support GET and POST. I use it so each action clearly shows its purpose, like PATCH for changing status and DELETE for deleting a task. It makes the code more organized and follows the way Laravel handles CRUD operations.
 
 ---
 
@@ -692,59 +612,36 @@ Handles the theme toggle by changing the current **data-theme** and saving the s
 
 # CRUD FLOW
 
-**Create**
+## Create
 
-create.blade.php
-      ↓
-POST /tasks
-      ↓
-store()
-      ↓
-Task::create()
-      ↓
-Database
+Creating a task starts from the Create Task form in create.blade.php. When the user submits the form, Laravel receives the POST request through tasks.store, and TaskController@store validates the data before using Task::create() to save it to the database.
 
-**Read**
+**create.blade.php → POST /tasks → tasks.store → TaskController@store → Validate the form → Task::create() → Database → Redirect to All Tasks**
 
-Database
-      ↓
-Task model
-      ↓
-Controller
-      ↓
-Blade View
+## Read
 
-Reading one task uses:
+**View All Tasks**
+Reading tasks means retrieving the tasks from the database and displaying them to the user. In my project, TaskController@allTasks uses the Task model to get the tasks and passes them to all_tasks.blade.php, where the complete task list is displayed.
 
-**show(Task $task)**
+**/tasks/all → tasks.all → TaskController@allTasks → Task::latest()->get() → Database → all_tasks.blade.php → Display all tasks**
 
-**Update**
+**View Individual Task**
 
-edit.blade.php
-      ↓
-PUT /tasks/{id}
-      ↓
-update()
-      ↓
-$task->update()
-      ↓
-Database
+The individual View feature allows the user to see the details of one specific task instead of the entire list. When the user clicks the eye icon, the task ID is included in the URL, Laravel uses route model binding to find the Task, and TaskController@show sends it to show.blade.php.
 
-Changing only the status uses PATCH:
+**Click View icon → /tasks/{id} → tasks.show → TaskController@show → Find the Task → show.blade.php → Display task details**
 
-**PATCH /tasks/{id}/status**
+## UPDATE
 
-**Delete**
+Updating a task starts from the Edit page, where the existing task information is loaded into the form. After the user submits the changes, Laravel treats the request as PUT, TaskController@update validates the data, and $task->update() saves the changes to the existing database record.
 
-Delete form
-      ↓
-DELETE /tasks/{id}
-      ↓
-destroy()
-      ↓
-$task->delete()
-      ↓
-Database
+**edit.blade.php → PUT /tasks/{id} → tasks.update → TaskController@update → Validate the form → $task->update() → Database → Redirect to All Tasks**
+
+### Delete
+
+Deleting a task is done through the Delete form in the All Tasks or View Task page. The form sends a DELETE request to the tasks.destroy route, which calls TaskController@destroy and uses $task->delete() to remove the selected record from the database.
+
+**Delete form → DELETE /tasks/{id} → tasks.destroy → TaskController@destroy → $task->delete() → Database → Redirect to All Tasks**
 
 ---
 
@@ -767,28 +664,14 @@ Database
        Task Model
           |
           |
-      MariaDB
+      Mysql
           |
           |
       tasks table
 
 The main task request flow is:
 
-User
- ↓
-Blade
- ↓
-Route
- ↓
-Controller
- ↓
-Model
- ↓
-Database
- ↓
-Controller
- ↓
-Blade
+**User → Blade → Route → Controller → Model → Database → Controller → Blade**
 
 The project uses this structure for all major task operations, while JavaScript handles features that can be performed directly in the browser.
 
