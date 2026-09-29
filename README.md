@@ -221,6 +221,8 @@ Each task displays its name, description, due date, and status.
 The Recent Tasks section is read-only. The user cannot edit, delete, or change the status directly from this section.
 
 ## 9. Status Filter
+![TaskFlow Light Mode](screenshots/recent-comp.png)
+![TaskFlow Light Mode](screenshots/recent-pend.png)
 
 The Recent Tasks section has a Status filter with:
 
@@ -231,7 +233,10 @@ The Recent Tasks section has a Status filter with:
 The tasks contain a **data-status** value, and **dashboard.js** checks this value to show only the tasks that match the selected status. This filtering is done in the browser using the tasks that are already on the page.
 
 ## 10. Date Filter
-
+![TaskFlow Light Mode](screenshots/recent-inde.png)
+![TaskFlow Light Mode](screenshots/recent-today.png)
+![TaskFlow Light Mode](screenshots/recent-next.png)
+![TaskFlow Light Mode](screenshots/recent-over.png)
 The Recent Tasks section also has a Date filter with:
 
 - All dates
@@ -283,8 +288,9 @@ JavaScript handles filters, theme, and search interaction
 
 The All Tasks page displays the complete list of saved tasks and provides the main task management controls.
 
-![TaskFlow Light Mode](screenshots/all-lightmode.png)
-![TaskFlow Light Mode](screenshots/all-darkmode.png)
+![TaskFlow Light Mode](screenshots/all.png)
+![TaskFlow Light Mode](screenshots/all-pending.png)
+![TaskFlow Light Mode](screenshots/all-complete.png)
 
 The page can:
 
@@ -344,7 +350,8 @@ The Edit icon opens:
 The Controller receives the task, sends it to **edit.blade.php**, and the form displays the current values.
 
 ## Delete Task
-
+![delete](screenshots/delete.png)
+![delete](screenshots/delete-result.png)
 The Delete button submits a DELETE request to:
 
 **/tasks/{id}**
@@ -366,7 +373,9 @@ The Controller changes the status between pending and completed.
 ---
 
 # CREATE TASK
-
+![create](screenshots/create.png)
+![create](screenshots/create-status.png)
+![create](screenshots/create-date.png)
 The Create Task page is stored in:
 
 **resources/views/tasks/create.blade.php**
@@ -436,7 +445,7 @@ After validation, the task is saved with:
 ---
 
 # VIEW INDIVIDUAL TASK
-
+![view](screenshots/view.png)
 The View Task page shows one specific task instead of the entire task list.
 
 The route is:
