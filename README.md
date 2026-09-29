@@ -74,8 +74,8 @@ The sidebar is located on the left side of the Dashboard. It contains the TaskFl
 The links use Laravel named routes such as **tasks.index** and **tasks.all**.
 
 ## 2. Search Bar
-![Search with match](screenshots/searcwresults.png)
-![Search with out matchi](screenshots/searcnresults.png)
+![Search with match](screenshots/searchwresults.png)
+![Search with out matchi](screenshots/searchnresults.png)
 
 The Dashboard has a global search bar at the top. It searches tasks by task name.
 
