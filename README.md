@@ -379,7 +379,7 @@ After validation, the task is saved with:
 ---
 
 # VIEW INDIVIDUAL TASK
-![view](screenshots/view.png)
+![view specific](screenshots/view-dark.png)
 The View Task page shows one specific task instead of the entire task list.
 
 The route is:
@@ -664,7 +664,7 @@ Deleting a task is done through the Delete form in the All Tasks or View Task pa
        Task Model
           |
           |
-      Mysql
+        Mysql
           |
           |
       tasks table
