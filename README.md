@@ -29,6 +29,7 @@ The Dashboard is the main page of my TaskFlow application. It gives the user a q
 <img src="screenshots/dashboard-light-recent.png">
 <img src="screenshots/dashboard-darkmode.png">
 <img src="screenshots/dashboard-darkmode-recent.png">
+
 ## 1. SIDE BAR NAVIGATION
 The sidebar is located on the left side of the Dashboard. It contains the TaskFlow logo and two navigation links.
 - DASHBOARD: The Dashboard link takes the user to the main dashboard page
@@ -42,19 +43,18 @@ The search bar is located at the top of the Dashboard. It allows the user to sea
 
 1. The user types a task name in the search bar.
 2. JavaScript detects the input.
-3. JavaScript uses `fetch()` to send the search text to the Laravel search route.
-4. Laravel receives the search request through the `tasks.search` route.
-5. `TaskController@search` searches the `task_name` column in the database.
+3. JavaScript uses fetch() to send the search text to the Laravel search route.
+4. Laravel receives the search request through the tasks.search route.
+5. TaskController@search searches the task_name column in the database.
 6. Laravel returns the matching tasks as JSON.
 7. JavaScript receives the JSON response.
 8. The matching task names are displayed below the search bar.
 9. When the user clicks a result, the user is redirected to that task's View page.
 
-The Controller searches using a `LIKE` query so that the search text can match part of a task name.
-
+The Controller searches using a LIKE query so that the search text can match part of a task name.
 Example:
 
-Searching for `laravel` can match:
+Searching for laravel can match:
 - Laravel Exam
 - Laravel Assignment
 - Study Laravel Routing
@@ -62,42 +62,31 @@ Searching for `laravel` can match:
 ## 3. Dark/Light Mode
 
 The Dashboard includes a theme button on the top-right side of the screen.
-
 The user can switch between:
 
 - Light mode
 - Dark mode
-
 The theme is handled by JavaScript and CSS variables.
 
 ### How it works
 
-1. JavaScript checks `localStorage` for the saved theme.
+1. JavaScript checks localStorage for the saved theme.
 2. If no theme is saved, the default theme is light.
 3. When the user clicks the theme button, JavaScript changes the theme.
-4. The selected theme is saved in `localStorage`.
-5. The HTML element receives either `data-theme="light"` or `data-theme="dark"`.
+4. The selected theme is saved in localStorage.
+5. The HTML element receives either data-theme="light" or data-theme="dark".
 6. CSS changes the colors of the page based on the selected theme.
 
-The saved theme is stored using the key:
-
-`taskflow-theme`
-
+The saved theme is stored using the key: taskflow-theme
 This allows the selected theme to remain even after refreshing the page.
 
 ## 4. Dashboard Header
 
-The Dashboard header contains the page title:
+The Dashboard header contains the page title: Dashboard
 
-`Dashboard`
+and the description: Stay on top of your tasks and deadlines.
 
-and the description:
-
-`Stay on top of your tasks and deadlines.`
-
-There is also an `+ Add Task` button.
-
-The Add Task button sends the user to the Create Task page using the `tasks.create` route.
+The Add Task button sends the user to the Create Task page using the tasks.create route.
 
 ### Add Task flow
 
@@ -110,7 +99,7 @@ TaskController@create
 create.blade.php
         ↓
 Create Task form
-The Dashboard therefore gives the user a direct way to create a new task.
+So the Dashboard gives the user a direct way to create a new task.
 ### Task Statistics
 The Dashboard contains three statistic cards:
 - Total Tasks
@@ -123,4 +112,24 @@ First, it filters the tasks where the status is completed. Then it counts the re
 The Dashboard uses: {{ $tasks->where('status', 'pending')->count() }}
 This filters the tasks where the status is pending and then counts them.
 
-**These values come from the $tasks collection that was retrieved by the Controller.**
+**These values come from the $tasks collection that was retrieved by the Controller. And the Dashboard is connected to the index() method in TaskController. The Controller gets the tasks using: $tasks = Task::latest()->get();**
+**This uses the Task model and Eloquent to retrieve the tasks from the database. Then the Controller sends the data to the Dashboard: return view('tasks.index', compact('tasks', 'pendingTasks')); Then Blade can use $tasks to display the statistics.**
+
+### To-Do List
+The To Do List shows pending tasks that still need to be completed. The Controller creates the list using:
+$pendingTasks = $tasks
+    ->where('status', 'pending')
+    ->sortBy(function ($task) {
+        return $task->due_date ?? '9999-12-31';
+    })
+    ->take(6);
+**STEP 1: Get pending tasks**
+This part: ->where('status', 'pending'). Keeps only tasks whose status is pending.
+
+**Step 2: Sort by due date**
+The tasks are sorted using their due date. Tasks with an earlier due date appear first. For tasks without a due date, the code uses: 9999-12-31. This places tasks without a due date toward the end of the list.
+
+**Step 3: Limit the number of tasks**
+The code uses: ->take(6). So the To Do List shows a maximum of six pending tasks. Each task in the To Do List shows: Task name and Due date
+
+If the task has no due date, the Dashboard displays: No due date
