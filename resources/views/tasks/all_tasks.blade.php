@@ -167,7 +167,7 @@
                                             @if($task->due_date)
 
                                                 <span>
-                                                    ◷
+                                                    ◷ Due
                                                     {{ $task->due_date->format('M d, Y') }}
                                                 </span>
 
